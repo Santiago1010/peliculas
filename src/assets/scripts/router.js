@@ -5,6 +5,7 @@ import MainLayout from '../../layouts/MainLayout.vue'
 
 // Importar páginas
 import Index from '../../pages/Index.vue'
+import SearchGender from '../../pages/SearchGender.vue'
 
 import NotFound from '../../pages/NotFound.vue'
 
@@ -16,6 +17,10 @@ const routes = [
 			{
 				path: '/',
 				component: Index
+			},
+			{
+				path: '/generos/:genres',
+				component: SearchGender
 			},
 		]
 	},
