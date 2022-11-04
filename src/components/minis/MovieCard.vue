@@ -9,7 +9,7 @@
 		</q-card-section>
 
 		<q-card-actions align="around">
-			<q-btn rounded flat>
+			<q-btn rounded flat @click="moviesStore.addFavories(props.id)">
 				<q-icon  name="add" />
 				<q-tooltip>Haz click para agregarlo a tu lista.</q-tooltip>
 			</q-btn>
@@ -35,8 +35,10 @@
 <script setup>
 	import { ref, onMounted } from 'vue'
 	import { useRouter } from 'vue-router'
+	import { useMoviesStore } from '../../assets/scripts/store/moviesStore.js'
 
 	const router = useRouter()
+	const moviesStore = useMoviesStore()
 
 	const props = defineProps(['title', 'stars', 'id', 'img'])
 

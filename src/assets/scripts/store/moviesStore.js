@@ -3,7 +3,8 @@ import api from '../axios.js'
 
 export const useMoviesStore = defineStore('movies', {
 	state: () => ({
-		allMovies: null
+		allMovies: localStorage.movies === null || localStorage.movies === "null" || localStorage.movies === undefined ? null : JSON.parse(localStorage.movies)
+		//favorites: localStorage.favorites === null || localStorage.favorites === "null" || localStorage.favorites === undefined ? null : JSON.parse(localStorage.favorites)
 	}),
 	actions: {
 		readMoviesPerGender(id) {
@@ -15,6 +16,23 @@ export const useMoviesStore = defineStore('movies', {
 			} else if (this.allMovies === null && localStorage.movies !== null) {
 				this.allMovies = JSON.parse(localStorage.movies)
 			}
+		},
+		addFavories(id) {
+			console.clear()
+			if (localStorage.favorites === undefined || localStorage.favorites === null) {
+				localStorage.setItem('favorites', JSON.stringify(JSON.parse(localStorage.movies).filter(m => m.id === parseInt(id))))
+			} else {
+				if (this.verifyFavorites(id) === undefined) {
+					let favorites = JSON.parse(localStorage.favorites)
+					favorites.push(JSON.parse(localStorage.movies).filter(m => m.id === parseInt(id))[0])
+					localStorage.favorites = JSON.stringify(favorites)
+				}
+			}
+
+			console.log(localStorage.favorites)
+		},
+		verifyFavorites(id) {
+			return localStorage.favorites !== null && localStorage.favorites !== "null" && localStorage.favorites !== undefined ? JSON.parse(localStorage.favorites).filter(m => m.id === parseInt(id))[0] : true
 		}
 	}
 });
