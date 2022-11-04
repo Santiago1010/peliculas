@@ -7,6 +7,7 @@ import MainLayout from '../../layouts/MainLayout.vue'
 import Index from '../../pages/Index.vue'
 import SearchGender from '../../pages/SearchGender.vue'
 import Movie from '../../pages/Movie.vue'
+import MyList from '../../pages/MyList.vue'
 
 import NotFound from '../../pages/NotFound.vue'
 
@@ -26,6 +27,10 @@ const routes = [
 			{
 				path: '/pelicula/:id',
 				component: Movie
+			},
+			{
+				path: '/lista',
+				component: MyList
 			},
 		]
 	},

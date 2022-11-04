@@ -8,7 +8,7 @@
 
 				<q-btn flat to="/">Inicio</q-btn>
 				<!--<q-btn flat>películas</q-btn>-->
-				<q-btn flat>mi lista</q-btn>
+				<q-btn flat to="/lista">mi lista</q-btn>
 			</q-toolbar>
 		</q-header>
 
