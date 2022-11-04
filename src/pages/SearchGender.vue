@@ -2,7 +2,7 @@
 	<h4>Todas las películas de {{ route.params.genre }}:</h4>
 	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm">
 		<SwiperSlide v-for="all in moviesStore.allMovies" :key="all.id">
-			<MovieCard :title="all.title + ' (' + all.release_date.split('-')[0] +')'" :stars="all.stars" :img="all.poster_path" />
+			<MovieCard :title="all.title + ' (' + all.release_date.split('-')[0] +')'" :stars="all.stars" :img="all.poster_path" :id="all.id" />
 		</SwiperSlide>
 	</Swiper>
 </template>

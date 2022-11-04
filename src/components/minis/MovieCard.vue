@@ -14,7 +14,7 @@
 				<q-tooltip>Haz click para agregarlo a tu lista.</q-tooltip>
 			</q-btn>
 
-			<q-btn rounded flat>
+			<q-btn rounded flat @click="moreMovie(props.id)">
 				<q-icon  name="search" />
 				<q-tooltip>Haz click para saber más de esta película.</q-tooltip>
 			</q-btn>
@@ -33,12 +33,16 @@
 </template>
 
 <script setup>
-	import { ref, onMounted, defineProps } from 'vue'
+	import { ref, onMounted } from 'vue'
+	import { useRouter } from 'vue-router'
+
+	const router = useRouter()
 
 	const props = defineProps(['title', 'stars', 'id', 'img'])
 
-	//localStorage.setItem('favorites', JSON.stringify(props))
-	//console.log(JSON.parse(localStorage.favorites))
+	const moreMovie = (id) => {
+		router.push('/pelicula/' + id)
+	}
 </script>
 
 <style scoped>
