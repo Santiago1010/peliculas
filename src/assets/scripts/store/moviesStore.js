@@ -35,7 +35,7 @@ export const useMoviesStore = defineStore('movies', {
 				image: Animation
 			},
 			{
-				id: 12,
+				id: 10752,
 				genre: 'Bélicos',
 				description: 'La acción dramática ocurre alejada de los espacios cotidianos y transitados. Siempre en lugares poco usuales: selvas, desiertos, galaxias, etc.',
 				image: Belicean
@@ -118,7 +118,8 @@ export const useMoviesStore = defineStore('movies', {
 				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
 				image: Terror
 			},
-		]
+		],
+		favorites:  localStorage.favorites === null || localStorage.favorites === "null" || localStorage.favorites === undefined ? null : JSON.parse(localStorage.favorites)
 	}),
 actions: {
 	readMoviesPerGender(id) {
@@ -131,7 +132,7 @@ actions: {
 			this.allMovies = JSON.parse(localStorage.movies)
 		}
 	},
-	addFavories(id) {
+	addFavorites(id) {
 		console.clear()
 		if (localStorage.favorites === undefined || localStorage.favorites === null) {
 			localStorage.setItem('favorites', JSON.stringify(JSON.parse(localStorage.movies).filter(m => m.id === parseInt(id))))
@@ -142,16 +143,20 @@ actions: {
 				localStorage.favorites = JSON.stringify(favorites)
 			}
 		}
-
-		console.log(localStorage.favorites)
+		return true;
 	},
 	verifyFavorites(id) {
 		return localStorage.favorites !== null && localStorage.favorites !== "null" && localStorage.favorites !== undefined ? JSON.parse(localStorage.favorites).filter(m => m.id === parseInt(id))[0] : true
 	},
 	removeFavorites(id) {
 		console.clear()
-		let index = JSON.parse(localStorage.favorites).findIndex(m => m.id === parseInt(id))
-		JSON.parse(localStorage.favorites).splice(index, 1)
+		let myList = JSON.parse(localStorage.favorites)
+		let index = myList.findIndex(m => m.id === parseInt(id))
+		myList.splice(index, 1)
+		localStorage.favorites = null
+		this.favorites = myList
+		localStorage.favorites = JSON.stringify(myList)
+		return false
 	}
 }
 });

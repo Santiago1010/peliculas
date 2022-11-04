@@ -1,7 +1,7 @@
 <template>
 	<h1>Toda mi lista:</h1>
 	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm">
-		<SwiperSlide v-for="movie in list" :key="movie.id">
+		<SwiperSlide v-for="movie in moviesStore.favorites" :key="movie.id">
 			<MovieCard :title="movie.title + ' (' + movie.release_date.split('-')[0] +')'" :stars="movie.stars" :img="movie.poster_path" :id="movie.id" />
 		</SwiperSlide>
 	</Swiper>
@@ -30,20 +30,19 @@
 	const route = useRoute()
 	const moviesStore = useMoviesStore()
 
-	const list = ref(JSON.parse(localStorage.favorites))
 	const movie = ref(null)
 
 	const verifyGenre = (genres, genre) => {
-		//console.clear()
 		return genres.some(g => g === genre)
 	}
 
 	const filterMovieGenre = (genre) => {
 		console.clear()
-		return list.value.filter(m => verifyGenre(m.genre_ids, genre))
+		return moviesStore.favorites.filter(m => verifyGenre(m.genre_ids, genre))
 	}
 
 	onMounted(() => {
-		//filterMovieGenre(28)
+		moviesStore.favorites = JSON.parse(localStorage.favorites)
+		console.log(moviesStore.favorites)
 	})
 </script>
