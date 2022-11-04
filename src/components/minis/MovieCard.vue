@@ -1,6 +1,6 @@
 <template>
 	<q-card class="movie-card" dark>
-		<q-card-section horizontal>
+		<q-card-section class="both-movie" horizontal>
 			<q-card-section>
 				<span class="text-h6">{{ props.title }}</span>
 			</q-card-section>
@@ -62,6 +62,16 @@
 	.movie-card {
 		max-width: 300px;
 		text-align: center;
+		max-height: 240px;
+	}
+
+	.movie-card .titleSection {
+		overflow: hidden;
+	}
+
+	.movie-card .both-movie {
+		max-height: 188px;
+		overflow: hidden;
 	}
 
 	.movie-card h6,

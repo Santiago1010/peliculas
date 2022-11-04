@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<div class="box" v-for="genre in moviesStore.genres" :key="genre.id" @click="searchGender(genre.genre, genre.id)">
+		<div class="box" v-for="genre in genres" :key="genre.id" @click="searchGender(genre.genre, genre.id)">
 			<div class="imgBox">
 				<img :src="genre.image"/>
 			</div>
@@ -31,6 +31,8 @@
 	const filterStore = useFilterStore()
 	const moviesStore = useMoviesStore()
 
+	const genres = ref(moviesStore.genres)
+
 	const searchGender = (genre, id) => {
 		localStorage.movies = null
 		moviesStore.allMovies = null
@@ -38,7 +40,19 @@
 	}
 
 	const filterGenres = () => {
-		console.log(genres.value.filter(g => g.genre === 'Acción')[0])
+		let indexes = moviesStore.genres.map((g, i) => {
+			if (g.genre.toLowerCase().includes(filterStore.genresFilter.toLowerCase())) {
+				return i
+			}
+		})
+
+		genres.value = []
+
+		for (let i = 0; i < indexes.length; i++) {
+			if (indexes[i] !== undefined) {
+				genres.value.push(moviesStore.genres[indexes[i]])
+			}
+		}
 	}
 </script>
 
