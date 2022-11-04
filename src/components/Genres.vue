@@ -39,6 +39,9 @@
 	import History from '../assets/images/genres/historia.jpg'
 	import Mistery from '../assets/images/genres/misterio.jpg'
 	import Music from '../assets/images/genres/musical.jpg'
+	import Romantic from '../assets/images/genres/romantico.jpg'
+	import Suspense from '../assets/images/genres/suspenso.jpg'
+	import Terror from '../assets/images/genres/terror.jpg'
 
 	const router = useRouter()
 
@@ -123,6 +126,24 @@
 				genre: 'Musical',
 				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
 				image: Music
+			},
+			{
+				id: 10749,
+				genre: 'Romántico',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: Romantic
+			},
+			{
+				id: 53,
+				genre: 'Suspenso',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: Suspense
+			},
+			{
+				id: 27,
+				genre: 'Terror',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: Terror
 			},
 	])
 

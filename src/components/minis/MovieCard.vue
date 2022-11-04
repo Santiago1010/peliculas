@@ -9,9 +9,14 @@
 		</q-card-section>
 
 		<q-card-actions align="around">
-			<q-btn rounded flat @click="moviesStore.addFavories(props.id)">
+			<q-btn v-if="favorite === false" rounded flat @click="moviesStore.addFavories(props.id)">
 				<q-icon  name="add" />
 				<q-tooltip>Haz click para agregarlo a tu lista.</q-tooltip>
+			</q-btn>
+
+			<q-btn v-if="favorite === true" rounded flat @click="moviesStore.removeFavorites(props.id)">
+				<q-icon  name="remove" />
+				<q-tooltip>Haz click para eliminarlo de tu lista.</q-tooltip>
 			</q-btn>
 
 			<q-btn rounded flat @click="moreMovie(props.id)">
@@ -42,9 +47,15 @@
 
 	const props = defineProps(['title', 'stars', 'id', 'img'])
 
+	const favorite = ref(null)
+
 	const moreMovie = (id) => {
 		router.push('/pelicula/' + id)
 	}
+
+	onMounted(() => {
+		favorite.value = moviesStore.verifyFavorites(props.id) === undefined ? false : true
+	})
 </script>
 
 <style scoped>

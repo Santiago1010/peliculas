@@ -4,7 +4,6 @@ import api from '../axios.js'
 export const useMoviesStore = defineStore('movies', {
 	state: () => ({
 		allMovies: localStorage.movies === null || localStorage.movies === "null" || localStorage.movies === undefined ? null : JSON.parse(localStorage.movies)
-		//favorites: localStorage.favorites === null || localStorage.favorites === "null" || localStorage.favorites === undefined ? null : JSON.parse(localStorage.favorites)
 	}),
 	actions: {
 		readMoviesPerGender(id) {
@@ -33,6 +32,11 @@ export const useMoviesStore = defineStore('movies', {
 		},
 		verifyFavorites(id) {
 			return localStorage.favorites !== null && localStorage.favorites !== "null" && localStorage.favorites !== undefined ? JSON.parse(localStorage.favorites).filter(m => m.id === parseInt(id))[0] : true
+		},
+		removeFavorites(id) {
+			console.clear()
+			let index = JSON.parse(localStorage.favorites).findIndex(m => m.id === parseInt(id))
+			JSON.parse(localStorage.favorites).splice(index, 1)
 		}
 	}
 });
