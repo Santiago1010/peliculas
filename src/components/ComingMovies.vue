@@ -32,7 +32,7 @@
 	}
 
 	onMounted(() => {
-		readMovies()
+		//readMovies()
 	})
 </script>
 

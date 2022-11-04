@@ -1,11 +1,11 @@
 <template>
 	<div class="container">
-		<div class="box" v-for="genre in genres" :key="genre.espanol" @click="searchGender(genre.english)">
+		<div class="box" v-for="genre in genres" :key="genre.id" @click="searchGender(genre.genre, genre.id)">
 			<div class="imgBox">
 				<img :src="genre.image"/>
 			</div>
 			<div class="content">
-				<h6 class="text-h6">{{ genre.espanol }}</h6>
+				<h6 class="text-h6">{{ genre.genre }}</h6>
 				<p>{{ genre.description }}</p>
 			</div>
 		</div>
@@ -24,74 +24,115 @@
 
 	// Importar stores
 	import { useFilterStore } from '../assets/scripts/store/filtersStore.js'
+	import { useMoviesStore } from '../assets/scripts/store/moviesStore.js'
+
+	import Action from '../assets/images/genres/accion.jpg'
+	import Animation from '../assets/images/genres/animacion.jpg'
+	import Belicean from '../assets/images/genres/belico.jpg'
+	import Science from '../assets/images/genres/ciencia.jpg'
+	import Comedy from '../assets/images/genres/comedia.jpg'
+	import Crime from '../assets/images/genres/crimen.jpg'
+	import Documentary from '../assets/images/genres/documental.jpg'
+	import Drama from '../assets/images/genres/drama.jpg'
+	import Family from '../assets/images/genres/familiar.jpg'
+	import Fantasy from '../assets/images/genres/fantasia.jpg'
+	import History from '../assets/images/genres/historia.jpg'
+	import Mistery from '../assets/images/genres/misterio.jpg'
+	import Music from '../assets/images/genres/musical.jpg'
 
 	const router = useRouter()
 
 	const filterStore = useFilterStore()
+	const moviesStore = useMoviesStore()
 
 	const genres = ref([
 			{
-				espanol: 'Acción',
-				english: 'action',
+				id: 28,
+				genre: 'Acción',
 				description: 'Persecuciones, tiroteos, enfrentamientos, artes marciales y luchas callejeras, armas, explosiones, agresiones y cualquier situación violenta o intensa.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BMTI5Mjg1MzM4NF5BMl5BanBnXkFtZTcwNTAyNzUzMw@@._V1_Ratio0.6757_AL_.jpg'
+				image: Action
 			},
 			{
-				espanol: 'Aventura',
-				english: 'adventure',
-				description: 'La acción dramática ocurre alejada de los espacios cotidianos y transitados. Siempre en lugares poco usuales: selvas, desiertos, galaxias, etc.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BNGYyZGM5MGMtYTY2Ni00M2Y1LWIzNjQtYWUzM2VlNGVhMDNhXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_Ratio0.7273_AL_.jpg'
-			},
-			{
-				espanol: 'Animación',
-				english: 'animation',
+				id: 16,
+				genre: 'Animación',
 				description: 'Historias con personajes ficiticios animados de distintas formas que abarcan temas tan complejos, como diversos.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_Ratio0.6757_AL_.jpg'
+				image: Animation
 			},
 			{
-				espanol: 'Biográfico',
-				english: 'bigraphy',
+				id: 12,
+				genre: 'Bélico',
+				description: 'La acción dramática ocurre alejada de los espacios cotidianos y transitados. Siempre en lugares poco usuales: selvas, desiertos, galaxias, etc.',
+				image: Belicean
+			},
+			{
+				id: 878,
+				genre: 'Ciencia ficción',
 				description: 'Versan sobre la vida de una persona o conjunto de personas. Si bien pueden ser vidas ficcionadas, este género se interpreta siempre como basado en hechos reales.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BMTQ5NjQ0NDI3NF5BMl5BanBnXkFtZTcwNDI0MjEzMw@@._V1_Ratio0.7273_AL_.jpg'
+				image: Science
 			},
 			{
-				espanol: 'Comedia',
-				english: 'bigraphy',
+				id: 35,
+				genre: 'Comedia',
 				description: 'El cine cómico se caracteriza, hasta la aparición del sonoro, por la inclusión de gags, chistes o bromas de carácter fundamentalmente visual.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BMjA0ODYwNzU5Nl5BMl5BanBnXkFtZTcwNTI1MTgxMw@@._V1_Ratio0.6757_AL_.jpg'
+				image: Comedy
 			},
 			{
-				espanol: 'Crimen',
-				english: 'crime',
+				id: 80,
+				genre: 'Crimen',
 				description: 'Las películas de crimen, en el sentido más amplio, son un género cinematográfico inspirado en la ficción policíaca del género literario. Las películas de este género generalmente implican varios aspectos de actos criminales, como su preparación, ejecución, detección y detención.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BMzE3YzNjMTMtYmEzNC00ZTNkLTkwMWEtNjRhNzk2ZjUxMmMwXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_Ratio0.6757_AL_.jpg'
+				image: Crime
 			},
 			{
-				espanol: 'Documental',
-				english: 'documentary',
+				id: 99,
+				genre: 'Documental',
 				description: 'El documental se caracteriza por presentar la realidad o unos hechos determinados. Tiene una finalidad informativa y didáctica principalmente e intenta exponer la realidad de forma objetiva. La credibilidad es clave en un documental.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BNTJmZGU5OTktNzllMC00NWNjLThlYjktOTIzNDQ1N2JkMDdjXkEyXkFqcGdeQXVyMTUzODk1Njc@._V1_Ratio1.7838_AL_.jpg'
+				image: Documentary
 			},
 			{
-				espanol: 'Drama',
-				english: 'drama',
+				id: 18,
+				genre: 'Drama',
 				description: 'El drama en el cine presenta historias serias, en las que prevalece el dialogo y la acción orientadas a generar tensión y presentar pasiones conflictivas más que generar humor. Se tratan temas trascendentes sin tener siempre que llevar a la muerte de sus protagonistas.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BMTcxNTQ1MzAyOF5BMl5BanBnXkFtZTYwNDg0ODk4._V1_Ratio0.6757_AL_.jpg'
+				image: Drama
 			},
 			{
-				espanol: 'Familiar',
-				english: 'family',
+				id: 10751,
+				genre: 'Familiar',
 				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
-				image: 'https://imdb-api.com/API/ResizeImage?apiKey=k_g3j22m60&size=300x300&url=https://m.media-amazon.com/images/M/MV5BNjE5NzA4ZDctOTJkZi00NzM0LTkwOTYtMDI4MmNkMzIxODhkXkEyXkFqcGdeQXVyNjY1MTg4Mzc@._V1_Ratio0.6757_AL_.jpg'
+				image: Family
+			},
+			{
+				id: 14,
+				genre: 'Fantasía',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: Fantasy
+			},
+			{
+				id: 36,
+				genre: 'Historia',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: History
+			},
+			{
+				id: 9648,
+				genre: 'Misterio',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: Mistery
+			},
+			{
+				id: 10402,
+				genre: 'Musical',
+				description: 'Un tono amable y divertido, un final feliz y cerrado, las relaciones personales se sitúan en el centro de la trama y ofrecen aquello que se espera de ellas.',
+				image: Music
 			},
 	])
 
-	const searchGender = (genres) => {
-		router.push('/generos/' + genres)
+	const searchGender = (genre, id) => {
+		moviesStore.allMovies = null
+		router.push('/generos/' + genre + '/' + id)
 	}
 
 	const filterGenres = () => {
-		console.log(genres.value.filter(g => g.espanol === 'Acción')[0])
+		console.log(genres.value.filter(g => g.genre === 'Acción')[0])
 	}
 </script>
 

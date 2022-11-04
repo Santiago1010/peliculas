@@ -1,66 +1,31 @@
 <template>
-	<h4>Todas las películas:</h4>
-	<q-card class="movie-card">
-		<q-img src="https://images3.alphacoders.com/118/thumb-1920-1185634.jpg"></q-img>
-
-		<q-card-section>
-			<span class="text-h6">The Batman</span>
-			<p>con Robert pattinson</p>
-		</q-card-section>
-
-		<q-card-actions align="around">
-			<q-btn rounded flat>
-				<q-icon  name="add" />
-				<q-tooltip>Haz click para agregarlo a tu lista.</q-tooltip>
-			</q-btn>
-
-			<q-btn rounded flat>
-				<q-icon  name="search" />
-				<q-tooltip>Haz click para saber más de esta película.</q-tooltip>
-			</q-btn>
-
-			<q-btn rounded flat>
-				<q-icon  name="delete" />
-				<q-tooltip>Haz click para eliminar esta película.</q-tooltip>
-			</q-btn>
-
-			<q-btn rounded flat>
-				<q-icon  name="share" />
-				<q-tooltip>Haz click para compartir esta película.</q-tooltip>
-			</q-btn>
-		</q-card-actions>
-	</q-card>
+	<h4>Todas las películas de {{ route.params.genre }}:</h4>
+	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm">
+		<SwiperSlide v-for="all in moviesStore.allMovies" :key="all.id">
+			<MovieCard :title="all.title + ' (' + all.release_date.split('-')[0] +')'" :stars="all.stars" :img="all.poster_path" />
+		</SwiperSlide>
+	</Swiper>
 </template>
 
 <script setup>
 	import { ref, onMounted } from 'vue'
 	import { useRouter, useRoute } from 'vue-router'
-	import api from '../assets/scripts/axios.js'
+	import { useMoviesStore } from '../assets/scripts/store/moviesStore.js'
+	import { Swiper, SwiperSlide } from 'swiper/vue';
+
+	// Import Swiper styles
+	import 'swiper/css';
+
+	// Import components
+	import MovieCard from '../components/minis/MovieCard.vue'
 
 	const route = useRoute();
 
 	const allMovies = ref(null)
-
-	const readMoviesPerGender = () => {
-		api.get('/AdvancedSearch/' + import.meta.env.VITE_API_KEY +  '?genres=' + route.params.genres).then(response => {
-			allMovies.value = response.data.results
-		}).catch(error => console.error('Error: ' + error))
-	}
+	const moviesStore = useMoviesStore()
 
 	onMounted(() => {
-		//readMoviesPerGender()
+		moviesStore.readMoviesPerGender(route.params.id)
+		allMovies.value = moviesStore.allMovies
 	})
 </script>
-
-<style scoped>
-	.movie-card {
-		max-width: 300px;
-		text-align: center;
-	}
-
-	.movie-card h6,
-	.movie-card p {
-		color: #000000;
-		line-height: 1;
-	}
-</style>

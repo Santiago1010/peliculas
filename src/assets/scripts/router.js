@@ -19,7 +19,7 @@ const routes = [
 				component: Index
 			},
 			{
-				path: '/generos/:genres',
+				path: '/generos/:genre/:id',
 				component: SearchGender
 			},
 		]

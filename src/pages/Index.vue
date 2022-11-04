@@ -11,6 +11,13 @@
 
 	// Importar componentes
 	import Genres from '../components/Genres.vue'
+
+	onMounted(() => {
+		/*api.get('discover/movie?with_genres=28&language=es-ES&api_key=' + import.meta.env.VITE_API_KEY).then(response => {
+			console.clear()
+			console.log(response.data)
+		})*/
+	})
 </script>
 
 <style scoped>
