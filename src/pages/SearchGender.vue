@@ -37,6 +37,8 @@
 	}
 
 	onMounted(() => {
+		localStorage.movies = null
+		moviesStore.allMovies = null
 		moviesStore.readMoviesPerGender(route.params.id)
 		allMovies.value = moviesStore.allMovies
 	})
