@@ -1,7 +1,7 @@
 <template>
 	<h4>Todas las películas de {{ route.params.genre }}:</h4>
 	<div class="row">
-		<q-input type="number" class="col-12 q-mb-md" dark outlined label="Ver cantidad de resultados" color="primary"></q-input>
+		<q-input v-model="filterStore.moviesNumber" type="number" class="col-12 q-mb-md" dark outlined label="Ver cantidad de resultados" color="primary" @update:model-value="filterInput"></q-input>
 	</div>
 
 	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm desktop-only">
@@ -37,6 +37,7 @@
 	import { ref, onMounted } from 'vue'
 	import { useRouter, useRoute } from 'vue-router'
 	import { useMoviesStore } from '../assets/scripts/store/moviesStore.js'
+	import { useFilterStore } from '../assets/scripts/store/filtersStore.js'
 	import { Swiper, SwiperSlide } from 'swiper/vue';
 
 	// Import Swiper styles
@@ -49,15 +50,30 @@
 
 	const allMovies = ref(null)
 	const moviesStore = useMoviesStore()
+	const filterStore = useFilterStore()
+
+	const disableFilter = ref(false)
 
 	const newPage = (id) => {
 		moviesStore.addNewPage(id)
+		filterStore.moviesNumber = moviesStore.allMovies.length - 1
+	}
+
+	const filterInput = () => {
+		if (filterStore.moviesNumber > 0 && filterStore.moviesNumber < moviesStore.allMovies.length) {
+			allMovies.value = moviesStore.allMovies.splice(filterStore.moviesNumber)
+		}else {
+			moviesStore.allMovies = null
+			moviesStore.readMoviesPerGender(route.params.id)
+			allMovies.value = moviesStore.allMovies
+		}
 	}
 
 	onMounted(() => {
 		moviesStore.allMovies = null
 		moviesStore.readMoviesPerGender(route.params.id)
 		allMovies.value = moviesStore.allMovies
+		filterStore.moviesNumber = parseInt(JSON.parse(localStorage.movies).length - 1)
 	})
 </script>
 
