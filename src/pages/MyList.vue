@@ -1,5 +1,5 @@
 <template>
-	<!--<h1>Toda mi lista:</h1>
+	<h1>Toda mi lista:</h1>
 	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm">
 		<SwiperSlide v-for="movie in moviesStore.favorites" :key="movie.id">
 			<MovieCard :title="movie.title + ' (' + movie.release_date.split('-')[0] +')'" :stars="movie.stars" :img="movie.poster_path" :id="movie.id" />
@@ -13,7 +13,7 @@
 				<MovieCard :title="movie.title + ' (' + movie.release_date.split('-')[0] +')'" :stars="movie.stars" :img="movie.poster_path" :id="movie.id" />
 			</SwiperSlide>
 		</Swiper>
-	</div>-->
+	</div>
 </template>
 
 <script setup>
@@ -37,12 +37,10 @@
 	}
 
 	const filterMovieGenre = (genre) => {
-		console.clear()
 		return moviesStore.favorites.filter(m => verifyGenre(m.genre_ids, genre))
 	}
 
 	onMounted(() => {
 		moviesStore.favorites = JSON.parse(localStorage.favorites)
-		console.log(moviesStore.favorites)
 	})
 </script>

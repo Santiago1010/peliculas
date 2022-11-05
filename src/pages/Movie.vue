@@ -8,10 +8,10 @@
 
 				<div class="q-pa-md q-gutter-md otherGenres">
 					<div v-for="genre in movie.genre_ids">
-						<q-chip class="chips-pointer" size="18px" color="primary" text-color="white" clickable @click="goToGenre(readGenre(genre).genre, readGenre(genre).id)">
+						<!--<q-chip class="chips-pointer" size="18px" color="primary" text-color="white" clickable @click="goToGenre(readGenre(genre).genre, readGenre(genre).id)">
 							{{ readGenre(genre).genre }}
 							<q-tooltip>Haz click para ver más películas de {{ readGenre(genre).genre }}.</q-tooltip>
-						</q-chip>
+						</q-chip>-->
 					</div>
 				</div>
 
@@ -71,8 +71,8 @@
 	}
 
 	const goToGenre = (genre, id) => {
-		localStorage.movies = null
-		moviesStore.allMovies = null
+		//localStorage.movies = null
+		//moviesStore.allMovies = null
 		router.push('/generos/' + genre + '/' + id)
 	}
 
@@ -91,6 +91,8 @@
 	onMounted(() => {
 		readSimilars()
 		readMyList()
+
+		console.log(movie.value)
 	})
 </script>
 

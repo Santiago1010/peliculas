@@ -33,7 +33,6 @@
 	const moviesStore = useMoviesStore()
 
 	const newPage = (id) => {
-		console.clear()
 		moviesStore.addNewPage(id)
 	}
 

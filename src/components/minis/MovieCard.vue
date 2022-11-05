@@ -14,7 +14,7 @@
 				<q-tooltip>Haz click para agregarlo a tu lista.</q-tooltip>
 			</q-btn>
 
-			<q-btn v-if="favorite === true" rounded flat @click="removeFavorites(props.id)">
+			<q-btn v-else rounded flat @click="removeFavorites(props.id)">
 				<q-icon  name="remove" />
 				<q-tooltip>Haz click para eliminarlo de tu lista.</q-tooltip>
 			</q-btn>
@@ -47,7 +47,7 @@
 
 	const props = defineProps(['title', 'stars', 'id', 'img'])
 
-	const favorite = ref(null)
+	const favorite = ref(false)
 
 	const moreMovie = (id) => {
 		router.push('/pelicula/' + id)
@@ -63,6 +63,8 @@
 
 	onMounted(() => {
 		favorite.value = moviesStore.verifyFavorites(props.id) === undefined ? false : true
+		//console.log(localStorage)
+		//console.log(moviesStore.verifyFavorites(props.id) === undefined ? false : true)
 	})
 </script>
 
