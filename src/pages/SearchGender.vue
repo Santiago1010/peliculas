@@ -4,6 +4,14 @@
 		<SwiperSlide v-for="all in moviesStore.allMovies" :key="all.id">
 			<MovieCard :title="all.title + ' (' + all.release_date.split('-')[0] +')'" :stars="all.stars" :img="all.poster_path" :id="all.id" />
 		</SwiperSlide>
+
+		<SwiperSlide>
+			<q-card dark class="more-card" @click="newPage(route.params.id)">
+				<q-card-section>
+					<h4>MOSTRAR MÁS</h4>
+				</q-card-section>
+			</q-card>
+		</SwiperSlide>
 	</Swiper>
 </template>
 
@@ -24,8 +32,25 @@
 	const allMovies = ref(null)
 	const moviesStore = useMoviesStore()
 
+	const newPage = (id) => {
+		console.clear()
+		moviesStore.addNewPage(id)
+	}
+
 	onMounted(() => {
 		moviesStore.readMoviesPerGender(route.params.id)
 		allMovies.value = moviesStore.allMovies
 	})
 </script>
+
+<style scoped>
+	.more-card {
+		background-color: rgba(0, 0, 0, 0.4);
+		cursor: pointer;
+		height: 240px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: 0.5s;
+	}
+</style>
