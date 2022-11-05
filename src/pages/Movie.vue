@@ -7,11 +7,11 @@
 				<span class="text-h1">{{ movie.title }} ({{ movie.release_date.split('-')[0] }})</span>
 
 				<div class="q-pa-md q-gutter-md otherGenres">
-					<div v-for="genre in movie.genre_ids">
-						<!--<q-chip class="chips-pointer" size="18px" color="primary" text-color="white" clickable @click="goToGenre(readGenre(genre).genre, readGenre(genre).id)">
-							{{ readGenre(genre).genre }}
-							<q-tooltip>Haz click para ver más películas de {{ readGenre(genre).genre }}.</q-tooltip>
-						</q-chip>-->
+					<div v-for="genre in movie.genres">
+						<q-chip class="chips-pointer" size="18px" color="primary" text-color="white" clickable @click="goToGenre(genre.name, genre.id)">
+							{{ genre.name }}
+							<q-tooltip>Haz click para ver más películas de {{ genre.name }}.</q-tooltip>
+						</q-chip>
 					</div>
 				</div>
 
@@ -22,19 +22,10 @@
 				<q-card-actions>
 					<q-btn color="warning" @click="router.go(-1)">regresar</q-btn>
 					<q-btn v-if="favorite === true" color="info" @click="removeMyList">elimar de mi lista</q-btn>
-					<q-btn v-if="favorite === false" color="info" @click="addMyList">agregar de mi lista</q-btn>
+					<q-btn v-if="favorite === false" color="info" @click="addMyList">agregar a mi lista</q-btn>
 					<q-btn color="negative">eliminar película</q-btn>
 				</q-card-actions>
 			</q-card-section>
-		</q-card-section>
-
-		<q-card-section>
-			<h3>Películas similares:</h3>
-			<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm">
-				<SwiperSlide v-for="m in similar" :key="m.id">
-					<MovieCard :title="m.title + ' (' + m.release_date.split('-')[0] +')'" :img="m.poster_path" :id="m.id" />
-				</SwiperSlide>
-			</Swiper>
 		</q-card-section>
 	</q-card>
 </template>
@@ -57,22 +48,17 @@
 	const moviesStore = useMoviesStore()
 
 	const movie = ref(JSON.parse(localStorage.movies).filter(m => m.id === parseInt(route.params.id))[0])
-	const similar = ref(null)
 	const favorite = ref(false)
 
-	const readGenre = (id) => {
-		return moviesStore.genres.filter(g => g.id === parseInt(id))[0]
-	}
-
-	const readSimilars = () => {
-		api.get('movie/' + route.params.id + '/similar?api_key=' + import.meta.env.VITE_API_KEY + '&language=es-ES&page=1').then(response => {
-			similar.value = response.data.results
-		}).catch(error => console.error(error))
+	const readMovie = () => {
+		api.get('movie/' + route.params.id + '?language=es-ES&api_key=' + import.meta.env.VITE_API_KEY).then(response => {
+			movie.value = response.data
+		})
 	}
 
 	const goToGenre = (genre, id) => {
-		//localStorage.movies = null
-		//moviesStore.allMovies = null
+		localStorage.movies = null
+		moviesStore.allMovies = null
 		router.push('/generos/' + genre + '/' + id)
 	}
 
@@ -88,11 +74,11 @@
 		favorite.value = moviesStore.removeFavorites(route.params.id)
 	}
 
-	onMounted(() => {
-		readSimilars()
-		readMyList()
+	readMovie()
 
-		console.log(movie.value)
+	onMounted(() => {
+		readMovie()
+		readMyList()
 	})
 </script>
 

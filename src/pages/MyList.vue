@@ -33,11 +33,11 @@
 	const movie = ref(null)
 
 	const verifyGenre = (genres, genre) => {
-		return genres.some(g => g === genre)
+		return genres.some(g => g.id === genre)
 	}
 
 	const filterMovieGenre = (genre) => {
-		return moviesStore.favorites.filter(m => verifyGenre(m.genre_ids, genre))
+		return moviesStore.favorites.filter(m => verifyGenre(m.genres, genre))
 	}
 
 	onMounted(() => {

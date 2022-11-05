@@ -50,6 +50,7 @@
 	const favorite = ref(false)
 
 	const moreMovie = (id) => {
+		console.log(id)
 		router.push('/pelicula/' + id)
 	}
 
@@ -63,8 +64,6 @@
 
 	onMounted(() => {
 		favorite.value = moviesStore.verifyFavorites(props.id) === undefined ? false : true
-		//console.log(localStorage)
-		//console.log(moviesStore.verifyFavorites(props.id) === undefined ? false : true)
 	})
 </script>
 
