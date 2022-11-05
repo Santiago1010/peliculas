@@ -25,7 +25,7 @@
 			</q-btn>
 
 			<q-btn rounded flat>
-				<q-icon  name="delete" />
+				<q-icon  name="delete" @click="removeMovie(props.id)" />
 				<q-tooltip>Haz click para eliminar esta película.</q-tooltip>
 			</q-btn>
 
@@ -60,6 +60,10 @@
 
 	const removeFavorites = (id) => {
 		favorite.value = moviesStore.removeFavorites(id)
+	}
+
+	const removeMovie = (id) => {
+		moviesStore.removeMovie(id)
 	}
 
 	onMounted(() => {

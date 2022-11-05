@@ -1,6 +1,24 @@
 <template>
 	<h4>Todas las películas de {{ route.params.genre }}:</h4>
-	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm">
+	<div class="row">
+		<q-input type="number" class="col-12 q-mb-md" dark outlined label="Ver cantidad de resultados" color="primary"></q-input>
+	</div>
+
+	<Swiper :slides-per-view="5" :space-between="0" class="q-mx-sm desktop-only">
+		<SwiperSlide v-for="all in moviesStore.allMovies" :key="all.id">
+			<MovieCard :title="all.title + ' (' + all.release_date.split('-')[0] +')'" :stars="all.stars" :img="all.poster_path" :id="all.id" />
+		</SwiperSlide>
+
+		<SwiperSlide>
+			<q-card dark class="more-card" @click="newPage(route.params.id)">
+				<q-card-section>
+					<h4>MOSTRAR MÁS</h4>
+				</q-card-section>
+			</q-card>
+		</SwiperSlide>
+	</Swiper>
+
+	<Swiper :slides-per-view="1.2" :space-between="0" class="q-mx-sm mobile-only">
 		<SwiperSlide v-for="all in moviesStore.allMovies" :key="all.id">
 			<MovieCard :title="all.title + ' (' + all.release_date.split('-')[0] +')'" :stars="all.stars" :img="all.poster_path" :id="all.id" />
 		</SwiperSlide>
@@ -37,7 +55,6 @@
 	}
 
 	onMounted(() => {
-		localStorage.movies = null
 		moviesStore.allMovies = null
 		moviesStore.readMoviesPerGender(route.params.id)
 		allMovies.value = moviesStore.allMovies

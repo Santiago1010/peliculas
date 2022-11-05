@@ -3,6 +3,5 @@
 </template>
 
 <script setup>
-	//localStorage.clear()
-	//console.log(localStorage)
+	localStorage.setItem('genre', 0)
 </script>

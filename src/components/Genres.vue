@@ -34,7 +34,6 @@
 	const genres = ref(moviesStore.genres)
 
 	const searchGender = (genre, id) => {
-		localStorage.movies = null
 		moviesStore.allMovies = null
 		router.push('/generos/' + genre + '/' + id)
 	}

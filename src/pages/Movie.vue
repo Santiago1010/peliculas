@@ -1,6 +1,6 @@
 <template>
 	<q-card class="movie-card q-ma-md q-pa-lg" dark>
-		<q-card-section class="both-movie" horizontal>
+		<q-card-section class="both-movie desktop-only" horizontal>
 			<q-img :src="'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + movie.poster_path" class="col-3"></q-img>
 
 			<q-card-section>
@@ -23,10 +23,36 @@
 					<q-btn color="warning" @click="router.go(-1)">regresar</q-btn>
 					<q-btn v-if="favorite === true" color="info" @click="removeMyList">elimar de mi lista</q-btn>
 					<q-btn v-if="favorite === false" color="info" @click="addMyList">agregar a mi lista</q-btn>
-					<q-btn color="negative">eliminar película</q-btn>
+					<q-btn color="negative" @click="removeMovie">eliminar película</q-btn>
 				</q-card-actions>
 			</q-card-section>
 		</q-card-section>
+
+		<q-img :src="'https://image.tmdb.org/t/p/w185_and_h278_bestv2' + movie.poster_path" class="mobile-only"></q-img>
+
+		<q-card-section class="mobile-only">
+			<Swiper :slides-per-view="2" :space-between="1">
+				<SwiperSlide v-for="genre in movie.genres" class="q-mx-sm">
+					<q-chip class="chips-pointer" size="18px" color="primary" text-color="white" clickable @click="goToGenre(genre.name, genre.id)">
+						{{ genre.name }}
+						<q-tooltip>Haz click para ver más películas de {{ genre.name }}.</q-tooltip>
+					</q-chip>
+				</SwiperSlide>
+			</Swiper>
+
+			<h4 class="mobile-title">{{ movie.title }} ({{ movie.release_date.split('-')[0] }})</h4>
+
+			<p><b>Fecha de realización</b>: {{ movie.release_date }}</p>
+
+			<p>{{ movie.overview }}</p>
+		</q-card-section>
+
+		<q-card-actions vertical class="mobile-only">
+			<q-btn color="warning" @click="router.go(-1)">regresar</q-btn>
+			<q-btn v-if="favorite === true" color="info" @click="removeMyList">elimar de mi lista</q-btn>
+			<q-btn v-if="favorite === false" color="info" @click="addMyList">agregar a mi lista</q-btn>
+			<q-btn color="negative" @click="removeMovie">eliminar película</q-btn>
+		</q-card-actions>
 	</q-card>
 </template>
 
@@ -74,6 +100,11 @@
 		favorite.value = moviesStore.removeFavorites(route.params.id)
 	}
 
+	const removeMovie = () => {
+		moviesStore.removeMovie(route.params.id)
+		router.go(-1)
+	}
+
 	readMovie()
 
 	onMounted(() => {
@@ -89,5 +120,9 @@
 
 	.chips-pointer {
 		cursor: pointer;
+	}
+
+	.mobile-title {
+		text-align: center;
 	}
 </style>
